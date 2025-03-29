@@ -4,10 +4,13 @@
   "main": "./dist-electron/main.js",
   "scripts": {
     "clean": "rimraf dist dist-electron",
-    "dev": "cross-env NODE_ENV=development npm run clean && concurrently \"tsc -w -p tsconfig.electron.json\" \"vite\" \"wait-on -t 30000 http://localhost:54321 && electron ./dist-electron/main.js\"",
-    "start": "cross-env NODE_ENV=development concurrently \"tsc -p tsconfig.electron.json\" \"vite\" \"wait-on -t 30000 http://localhost:54321 && electron ./dist-electron/main.js\"",
-    "build": "cross-env NODE_ENV=production rimraf dist dist-electron && vite build && tsc -p tsconfig.electron.json",
-    "run-prod": "cross-env NODE_ENV=production electron ./dist-electron/main.js"
+    "dev": "node init && cross-env NODE_ENV=development npm run clean && concurrently \"tsc -w -p tsconfig.electron.json\" \"vite\" \"wait-on -t 30000 http://localhost:54321 && electron ./dist-electron/main.js\"",
+    "start": "node init && cross-env NODE_ENV=development concurrently \"tsc -p tsconfig.electron.json\" \"vite\" \"wait-on -t 30000 http://localhost:54321 && electron ./dist-electron/main.js\"",
+    "build": "node init && cross-env NODE_ENV=production rimraf dist dist-electron && vite build && tsc -p tsconfig.electron.json",
+    "run-prod": "node init && cross-env NODE_ENV=production electron ./dist-electron/main.js",
+    "package": "yarn build && electron-builder build",
+    "package-mac": "yarn build && electron-builder build --mac",
+    "package-win": "yarn build && electron-builder build --win"
   },
   "build": {
     "appId": "com.chunginlee.interviewcoder",
@@ -106,7 +109,13 @@
       "main": "dist-electron/main.js"
     }
   },
-  "keywords": ["interview", "coding", "interview prep", "technical interview", "tool"],
+  "keywords": [
+    "interview",
+    "coding",
+    "interview prep",
+    "technical interview",
+    "tool"
+  ],
   "author": "Interview Coder Contributors",
   "license": "AGPL-3.0-or-later",
   "description": "An invisible desktop application to help you pass your technical interviews.",
